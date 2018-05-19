@@ -22,23 +22,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	$subject = trim($_POST["subject"]);
 	$message = trim($_POST["message"]);
 
-	try {
-		$mg->messages()->send(getenv('MAILGUN_DOMAIN'), [
-			'from'    => $email,
-			'to'      => $recipient,
-			'subject' => $subject,
-			'text'    => $message
-		]);
-	} catch (Exception $e) {
-		// Set a 500 (internal server error) response code.
-		http_response_code(500);
+	$mg->messages()->send(getenv('MAILGUN_DOMAIN'), [
+		'from'    => $email,
+		'to'      => $recipient,
+		'subject' => $subject,
+		'text'    => $message
+	]);
 
-		echo 'Caught exception: ',  $e->getMessage(), "\n";
-		echo($email);
-		echo($recipient);
-		echo($subject);
-		echo($message);
-	}
+
+	echo $email;
+	echo $recipient;
+	echo $subject;
+	echo $message;
 
 	// Set a 200 (okay) response code.
 	http_response_code(200);
