@@ -1,9 +1,13 @@
 <?php
-	// Allow CORS
-	header("Access-Control-Allow-Origin: *");
+	// Respond to Preflights
+	if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+		header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+		header('Access-Control-Allow-Origin: *');
+		exit;
+	} else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		// Allow CORS
+		header("Access-Control-Allow-Origin: *");
 
-	// Only process POST reqeusts.
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		// Get the form fields and remove whitespace.
 		$name = strip_tags(trim($_POST["name"]));
 		$name = str_replace(array("\r","\n"),array(" "," "),$name);
