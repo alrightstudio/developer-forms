@@ -5,6 +5,9 @@ require 'vendor/autoload.php';
 use Mailgun\Mailgun;
 $mg = Mailgun::create(getenv('MAILGUN_API_KEY'));
 
+echo getenv('MAILGUN_API_KEY');
+exit;
+
 // Allow CORS
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: *');
