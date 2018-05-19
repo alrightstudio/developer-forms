@@ -19,21 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	// Get the form fields and remove whitespace.
 	$email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
 	$recipient = filter_var(trim($_POST["recipient"]), FILTER_SANITIZE_EMAIL);
-	$message = trim($_POST["message"]);
 	$subject = trim($_POST["subject"]);
-
-	// Check that data was sent to the mailer.
-	if (
-		!filter_var($email, FILTER_VALIDATE_EMAIL) OR
-		!filter_var($recipient, FILTER_VALIDATE_EMAIL) OR
-		empty($subject) OR
-		empty($message)
-	) {
-		// Set a 400 (bad request) response code and exit.
-		http_response_code(400);
-		echo "Oops! There was a problem with your submission. Please complete the form and try again.";
-		exit;
-	}
+	$message = trim($_POST["message"]);
 
 	try {
 		$mg->messages()->send(getenv('MAILGUN_DOMAIN'), [
@@ -43,19 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 			'text'    => $message
 		]);
 	} catch (Exception $e) {
+		// Set a 500 (internal server error) response code.
+		http_response_code(500);
 		echo 'Caught exception: ',  $e->getMessage(), "\n";
 	}
 
-	// Send the email.
-	if ($mgRequest) {
-		// Set a 200 (okay) response code.
-		http_response_code(200);
-		echo "Thank You! Your message has been sent.";
-	} else {
-		// Set a 500 (internal server error) response code.
-		http_response_code(500);
-		echo "Oops! Something went wrong and we couldn't send your message.";
-	}
+	// Set a 200 (okay) response code.
+	http_response_code(200);
+	echo "Thank You! Your message has been sent.";
 
 } else {
 	// Not a POST request, set a 403 (forbidden) response code.
