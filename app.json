@@ -1,0 +1,6 @@
+{
+	"name": "Developer Emails",
+	"description": "Easy ass AJAX contact forms. It's like Formkeep, but free!",
+	"repository": "https://github.com/alright-studio/developer-forms",
+	"keywords": ["php", "mailgun"]
+}

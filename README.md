@@ -2,6 +2,9 @@
 
 Easy ass AJAX contact forms. It's like Formkeep, but free!
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/alright-studio/developer-forms)
+
+
 ## Requirements
 
 - Mailgun Environment Variables
