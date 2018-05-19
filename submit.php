@@ -1,4 +1,6 @@
 <?php
+	// Allow CORS
+	header("Access-Control-Allow-Origin: *");
 
 	// Only process POST reqeusts.
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
