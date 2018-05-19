@@ -22,18 +22,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	$subject = trim($_POST["subject"]);
 	$message = trim($_POST["message"]);
 
-	$mg->messages()->send(getenv('MAILGUN_DOMAIN'), [
-		'from'    => $email,
-		'to'      => $recipient,
-		'subject' => $subject,
-		'text'    => $message
-	]);
-
-
-	echo $email;
-	echo $recipient;
-	echo $subject;
-	echo $message;
+	try {
+		$mg->messages()->send(getenv('MAILGUN_DOMAIN'), [
+			'from'    => $email,
+			'to'      => $recipient,
+			'subject' => $subject,
+			'text'    => $message
+		]);
+	} catch (Exception $e) {
+		echo $email;
+		echo $recipient;
+		echo $subject;
+		echo $message;
+		exit;
+	}
 
 	// Set a 200 (okay) response code.
 	http_response_code(200);
