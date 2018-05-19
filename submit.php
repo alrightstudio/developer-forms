@@ -5,9 +5,6 @@ require 'vendor/autoload.php';
 use Mailgun\Mailgun;
 $mg = Mailgun::create(getenv('MAILGUN_API_KEY'));
 
-echo getenv('MAILGUN_API_KEY');
-exit;
-
 // Allow CORS
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: *');
@@ -38,12 +35,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 		exit;
 	}
 
-	$mgRequest = $mg->messages()->send(getenv('MAILGUN_DOMAIN'), [
-		'from'    => $email,
-		'to'      => $recipient,
-		'subject' => $subject,
-		'text'    => $message
-	]);
+	try {
+		$mg->messages()->send(getenv('MAILGUN_DOMAIN'), [
+			'from'    => $email,
+			'to'      => $recipient,
+			'subject' => $subject,
+			'text'    => $message
+		]);
+	} catch (Exception $e) {
+		echo 'Caught exception: ',  $e->getMessage(), "\n";
+	}
 
 	// Send the email.
 	if ($mgRequest) {
