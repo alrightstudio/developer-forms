@@ -5,15 +5,14 @@ Easy ass AJAX contact forms. It's like Formkeep, but free!
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/alright-studio/developer-forms)
 
 
-## Requirements
+## Required Environment Variables
 
-- Mailgun Environment Variables
-	- `MAILGUN_API_KEY`
-	- `MAILGUN_DOMAIN`
+- `MAILGUN_API_KEY`
+- `MAILGUN_DOMAIN`
 
 ## How To Use
 
-1. Submit a JSON `POST` request to [https://developer-forms.herokuapp.com/submit](https://developer-forms.herokuapp.com/submit) with the following fields:
+1. Submit a JSON `POST` request to `<< yourdomain >>/submit` with the following fields:
 
 ```js
 {
