@@ -20,17 +20,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	$data = json_decode(file_get_contents('php://input'), true);
 
 	// Get the form fields and remove whitespace.
-	$email = filter_var(trim($data["email"]), FILTER_SANITIZE_EMAIL);
-	$recipient = filter_var(trim($data["recipient"]), FILTER_SANITIZE_EMAIL);
+	$from = filter_var(trim($data["from"]), FILTER_SANITIZE_EMAIL);
+	$to = filter_var(trim($data["to"]), FILTER_SANITIZE_EMAIL);
 	$subject = trim($data["subject"]);
-	$message = trim($data["message"]);
+	$html = trim($data["html"]);
+	$text = trim($data["text"]);
 
 	try {
 		$mg->messages()->send(getenv('MAILGUN_DOMAIN'), [
-			'from'    => $email,
-			'to'      => $recipient,
+			'from'    => $from,
+			'to'      => $to,
 			'subject' => $subject,
-			'text'    => $message
+			'html'    => $html,
+			'text'    => $text
 		]);
 	} catch (Exception $e) {
 		http_response_code(500);
