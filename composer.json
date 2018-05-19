@@ -1,0 +1,11 @@
+{
+    "name": "alright-studio/developer-forms",
+    "description": "Like Formkeep but free",
+    "authors": [
+        {
+            "name": "Alright Studio",
+            "email": "info@alright.studio"
+        }
+    ],
+    "require": {}
+}
