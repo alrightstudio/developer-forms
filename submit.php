@@ -3,10 +3,7 @@
 // Include Mailgun
 require 'vendor/autoload.php';
 use Mailgun\Mailgun;
-$configurator = new HttpClientConfigurator();
-$configurator->setEndpoint('http://bin.mailgun.net/6a09a0ec');
-$configurator->setDebug(true);
-$mg = Mailgun::configure($configurator);
+$mg = Mailgun::create(getenv('MAILGUN_API_KEY'));
 
 // Allow CORS
 header('Access-Control-Allow-Origin: *');
@@ -38,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 		exit;
 	}
 
-	$mgRequest = $mg->messages()->send('example.com', [
+	$mgRequest = $mg->messages()->send(getenv('MAILGUN_DOMAIN'), [
 		'from'    => $email,
 		'to'      => $recipient,
 		'subject' => $subject,
@@ -46,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 	]);
 
 	// Send the email.
-	if (mail($recipient, $subject, $content, $headers)) {
+	if ($mgRequest) {
 		// Set a 200 (okay) response code.
 		http_response_code(200);
 		echo "Thank You! Your message has been sent.";
