@@ -30,16 +30,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 			'text'    => $message
 		]);
 	} catch (Exception $e) {
-		echo $email;
-		echo $recipient;
-		echo $subject;
-		echo $message;
-		exit;
+		
 	}
 
 	// Set a 200 (okay) response code.
 	http_response_code(200);
 	echo "Thank You! Your message has been sent.";
+	echo $email;
+	echo $recipient;
+	echo $subject;
+	echo $message;
+	exit;
 
 } else {
 	// Not a POST request, set a 403 (forbidden) response code.
